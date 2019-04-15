@@ -33,27 +33,27 @@ target_link_libraries(onnx2daq_bin
 
 target_include_directories(onnx2daq_bin
     PRIVATE
-    ${PROJECT_SOURCE_DIR}
+    ${DNN_ROOT_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     )
 
 set_target_properties(onnx2daq_bin PROPERTIES OUTPUT_NAME "onnx2daq")
 
 if (${DNN_BUILD_PYTHON})
-    list(APPEND lib_src ${CMAKE_CURRENT_SOURCE_DIR}/pywrapper.cpp)
+    pybind11_add_module(_onnx2daq 
+        ${lib_src}
+        ${CMAKE_CURRENT_SOURCE_DIR}/pywrapper.cpp)
+
+    target_link_libraries(_onnx2daq
+        PUBLIC
+        protobuf::libprotobuf
+        glog::glog
+        onnx)
+
+    target_include_directories(_onnx2daq
+        PRIVATE
+        ${DNN_ROOT_DIR}
+        ${CMAKE_CURRENT_BINARY_DIR}
+        )
+
 endif()
-
-pybind11_add_module(_onnx2daq ${lib_src})
-
-target_link_libraries(_onnx2daq
-    PUBLIC
-    protobuf::libprotobuf
-    glog::glog
-    onnx)
-
-target_include_directories(_onnx2daq
-    PRIVATE
-    ${PROJECT_SOURCE_DIR}
-    ${CMAKE_CURRENT_BINARY_DIR}
-    )
-
