@@ -1,21 +1,3 @@
-cmake_minimum_required(VERSION 3.5.2)
-project(onnx2daq)
-
-option(DNN_BUILD_PYTHON "Build Python wrapper for onnx2daq" ON)
-set (CMAKE_CXX_STANDARD 11)
-set (DNN_ROOT_DIR ${PROJECT_SOURCE_DIR}/../../)
-
-include(${DNN_ROOT_DIR}/cmake/onnx.cmake)
-include(${DNN_ROOT_DIR}/cmake/system.cmake)
-include(${DNN_ROOT_DIR}/cmake/glog.cmake)
-include(${DNN_ROOT_DIR}/cmake/common.cmake)
-configure_onnx()
-configure_glog()
-
-if (${DNN_BUILD_PYTHON})
-    add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/../../third_party/pybind11 third_party/pybind11)
-endif()
-
 find_package(Protobuf)
 
 # dnn_protobuf_generate_cpp(ONNX_PROTO_SRCS ONNX_PROTO_HDRS onnx.proto3)
@@ -26,9 +8,9 @@ set(lib_src
     ${CMAKE_CURRENT_SOURCE_DIR}/OnnxConverter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/NodeAttrHelper.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/NodeAttrHelper.h
-    ${DNN_ROOT_DIR}/common/StrKeyMap.h
-    ${DNN_ROOT_DIR}/common/Shaper.h
-    ${DNN_ROOT_DIR}/common/Shaper.cpp
+    ${PROJECT_SOURCE_DIR}/common/StrKeyMap.h
+    ${PROJECT_SOURCE_DIR}/common/Shaper.h
+    ${PROJECT_SOURCE_DIR}/common/Shaper.cpp
     ${ONNX_PROTO_SRCS}
     ${ONNX_PROTO_HDRS})
 
@@ -51,7 +33,7 @@ target_link_libraries(onnx2daq_bin
 
 target_include_directories(onnx2daq_bin
     PRIVATE
-    ${DNN_ROOT_DIR}
+    ${PROJECT_SOURCE_DIR}
     ${CMAKE_CURRENT_BINARY_DIR}
     )
 
@@ -70,7 +52,7 @@ if (${DNN_BUILD_PYTHON})
 
     target_include_directories(_onnx2daq
         PRIVATE
-        ${DNN_ROOT_DIR}
+        ${PROJECT_SOURCE_DIR}
         ${CMAKE_CURRENT_BINARY_DIR}
         )
 
