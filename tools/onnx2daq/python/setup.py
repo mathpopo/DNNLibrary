@@ -109,6 +109,7 @@ class build_ext(setuptools.command.build_ext.build_ext):
                 '-DPY_EXT_SUFFIX={}'.format(sysconfig.get_config_var('EXT_SUFFIX') or ''),
                 '-DDNN_BUILD_PYTHON=ON',
                 '-DCMAKE_LIBRARY_OUTPUT_DIRECTORY={}'.format(extdir),
+                '-DBUILD_SHARED_LIBS=ON',
             ]
             if COVERAGE or DEBUG:
                 # in order to get accurate coverage information, the
