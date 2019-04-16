@@ -9,8 +9,7 @@ set(lib_src
     ${PROJECT_SOURCE_DIR}/common/StrKeyMap.h
     ${PROJECT_SOURCE_DIR}/common/Shaper.h
     ${PROJECT_SOURCE_DIR}/common/Shaper.cpp
-    ${ONNX_PROTO_SRCS}
-    ${ONNX_PROTO_HDRS})
+    )
 
 add_executable(onnx2daq_bin
     ${lib_src}
