@@ -122,7 +122,7 @@ class build_ext(setuptools.command.build_ext.build_ext):
                     # passing python version to window in order to
                     # find python in cmake
                     '-DPY_VERSION={}'.format('{0}.{1}'.format(*sys.version_info[:2])),
-                    '-DONNX_USE_MSVC_STATIC_RUNTIME=ON',
+                    '-DDNN_USE_MSVC_STATIC_RUNTIME=ON',
                 ])
                 if 8 * struct.calcsize("P") == 64:
                     # Temp fix for CI

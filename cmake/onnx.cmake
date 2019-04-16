@@ -18,10 +18,9 @@ macro(configure_onnx)
             )
         file(WRITE ${ONNX_CMAKELISTS} "${content}")
     endif()
-    set(ONNX_BUILD_MAIN_LIB ON)
+    set(ONNX_USE_MSVC_STATIC_RUNTIME ${DNN_USE_MSVC_STATIC_RUNTIME})
     set(ONNX_NAMESPACE ${DAQ_ONNX_NAMESPACE} CACHE STRING "onnx namespace")
     add_subdirectory(${PROJECT_SOURCE_DIR}/third_party/onnx)
-    target_compile_definitions(onnx_proto PRIVATE ONNX_BUILD_MAIN_LIB)
     # Since https://github.com/onnx/onnx/pull/1318 is merged, we don't need to set it manually
     # target_compile_definitions(onnx
     # PUBLIC

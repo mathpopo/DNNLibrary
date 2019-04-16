@@ -1,3 +1,20 @@
+# Add MSVC RunTime Flag
+function(add_msvc_runtime_flag lib)
+    if(${DNN_USE_MSVC_STATIC_RUNTIME})
+        if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
+            target_compile_options(${lib} PRIVATE /MTd)
+        else()
+            target_compile_options(${lib} PRIVATE /MT)
+        endif()
+    else()
+        if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
+            target_compile_options(${lib} PRIVATE /MDd)
+        else()
+            target_compile_options(${lib} PRIVATE /MD)
+        endif()
+    endif()
+endfunction()
+
 # dnn_protobuf_generate_cpp(ONNX_PROTO_SRCS ONNX_PROTO_HDRS onnx.proto3)
 # message(${ONNX_PROTO_SRCS})
 # message(${CMAKE_CURRENT_BINARY_DIR})
@@ -34,6 +51,7 @@ target_include_directories(onnx2daq_bin
     ${CMAKE_CURRENT_BINARY_DIR}
     )
 
+add_msvc_runtime_flag(onnx2daq_bin)
 set_target_properties(onnx2daq_bin PROPERTIES OUTPUT_NAME "onnx2daq")
 
 if (${DNN_BUILD_PYTHON})
@@ -53,4 +71,5 @@ if (${DNN_BUILD_PYTHON})
         ${CMAKE_CURRENT_BINARY_DIR}
         )
 
+    add_msvc_runtime_flag(_onnx2daq)
 endif()
