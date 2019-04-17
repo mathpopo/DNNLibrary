@@ -1,23 +1,9 @@
-# Add MSVC RunTime Flag
-function(add_msvc_runtime_flag lib)
-    if(${DNN_USE_MSVC_STATIC_RUNTIME})
-        if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
-            target_compile_options(${lib} PRIVATE /MTd)
-        else()
-            target_compile_options(${lib} PRIVATE /MT)
-        endif()
-    else()
-        if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
-            target_compile_options(${lib} PRIVATE /MDd)
-        else()
-            target_compile_options(${lib} PRIVATE /MD)
-        endif()
-    endif()
-endfunction()
-
 # dnn_protobuf_generate_cpp(ONNX_PROTO_SRCS ONNX_PROTO_HDRS onnx.proto3)
 # message(${ONNX_PROTO_SRCS})
 # message(${CMAKE_CURRENT_BINARY_DIR})
+
+include(${PROJECT_SOURCE_DIR}/cmake/utils.cmake)
+
 set(lib_src 
     ${CMAKE_CURRENT_SOURCE_DIR}/OnnxConverter.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/OnnxConverter.h
